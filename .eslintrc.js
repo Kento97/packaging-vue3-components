@@ -19,6 +19,8 @@ module.exports = {
         "vue",
         "@typescript-eslint"
     ],
-    "rules": {},
+    "rules": {
+        "vue/multi-word-component-names": "off"
+    },
     "parser": "vue-eslint-parser",
 };

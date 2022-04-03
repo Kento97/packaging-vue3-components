@@ -8,14 +8,9 @@
 </template>
 
 <script lang='ts' setup>
-
-interface IToggle {
-  (): void
-}
-
 interface IProps {
   isCollapse: boolean,
-  toggle: IToggle
+  toggle: () => void
 }
 
 const {toggle, isCollapse = false} = defineProps<IProps>()

@@ -12,7 +12,7 @@ export default defineConfig({
         eslintPlugin({
             cache: false,
             include: ['src/**/*.js', 'src/**/*.jsx', 'src/**/*.ts', 'src/**/*.tsx', 'src/**/*.vue'],
-            exclude:['node_modules']
+            exclude: ['node_modules']
         })
     ],
     resolve: {
@@ -33,5 +33,5 @@ export default defineConfig({
                 additionalData: '@import "@/assets/scss/globalVariable.scss";'
             }
         }
-    }
+    },
 })
