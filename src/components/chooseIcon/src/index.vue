@@ -7,7 +7,7 @@
       <el-dialog :model-value="visible" :title="title" @closed="handleClosed">
         <div class="container">
           <div v-for="(item,index) in Object.keys(ElIcons)" :key="index" :title="item"
-               class="border-container">
+               class="border-container" @click="handleCopy(item)">
             <div class="icon-text-item">
               <div class="icon-container">
                 <el-icon :size="25">
@@ -20,12 +20,14 @@
         </div>
       </el-dialog>
     </div>
-
   </div>
 </template>
 
 <script lang='ts' setup>
 import * as ElIcons from "@element-plus/icons-vue";
+import {useClipboard} from '@vueuse/core'
+import {toLine} from "@/utils";
+import {ElMessage} from 'element-plus'
 
 interface IProps {
   //弹框的标题
@@ -40,6 +42,28 @@ interface IProps {
 
 const {changeVisible, title = "选择图标", visible = false, type = "primary"} = defineProps<IProps>()
 const handleClosed = () => changeVisible();
+//复制功能
+const {isSupported, copy} = useClipboard()
+const handleCopy = (content: string) => {
+  if (!isSupported) {
+    ElMessage({
+      type: 'error',
+      message: "Your browser does not support Clipboard API",
+      center: true,
+      duration: 1500
+    })
+    return;
+  }
+  const preCopiedStr = `<el-icon><${toLine(content)} /></el-icon>`
+  copy(preCopiedStr).then(() => {
+    ElMessage({
+      type: 'success',
+      message: "复制成功",
+      center: true,
+      duration: 1000
+    })
+  })
+}
 </script>
 
 <style lang="scss" scoped>
