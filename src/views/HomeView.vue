@@ -3,6 +3,6 @@
 
 <template>
   <main>
-    Home
+    <el-button type="primary">Primary</el-button>
   </main>
 </template>
