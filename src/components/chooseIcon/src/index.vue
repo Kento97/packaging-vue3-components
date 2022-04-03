@@ -4,12 +4,26 @@
       <slot>选择图标</slot>
     </el-button>
     <el-dialog :model-value="visible" :title="title" @closed="handleClosed">
-      111
+      <div class="container">
+        <div class="border-container" v-for="(item,index) in Object.keys(ElIcons)" :key="index"
+        >
+          <div class="icon-text-item">
+            <div class="icon-container">
+              <el-icon :size="25">
+                <component :is="item" class="icon-item"></component>
+              </el-icon>
+            </div>
+            <div class="text-container">{{ item }}</div>
+          </div>
+        </div>
+      </div>
     </el-dialog>
   </div>
 </template>
 
 <script lang='ts' setup>
+import * as ElIcons from "@element-plus/icons-vue";
+
 interface IProps {
   //弹框的标题
   title: string,
@@ -25,6 +39,37 @@ const {changeVisible, title = "选择图标", visible = false, type = "primary"}
 const handleClosed = () => changeVisible();
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 
+  .border-container {
+    width: 20%;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    padding: 5% 0;
+    cursor: pointer;
+
+    &:hover {
+      background: linear-gradient(#a1ffce, #faffd1);
+      color: mediumpurple;
+    }
+
+    .icon-text-item {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .text-container {
+        font-size: 14px;
+      }
+    }
+  }
+
+}
 </style>
