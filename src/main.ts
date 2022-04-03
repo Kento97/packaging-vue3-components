@@ -9,12 +9,12 @@ import 'element-plus/dist/index.css'
 
 const app = createApp(App)
 //全局注册icons
-for (let name in Icons) {
+for (const name in Icons) {
     if (Reflect.has(Icons, name)) {
         if (name === "Menu") {
             app.component("IconMenu", Icons[name])
         } else {
-            app.component(name, (Icons as any)[name])
+            app.component(name, (Icons as never)[name])
         }
     }
 }

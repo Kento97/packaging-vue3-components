@@ -2,11 +2,18 @@ import {fileURLToPath, URL} from 'url'
 
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
-
+import eslintPlugin from 'vite-plugin-eslint';
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [
-        vue(),
+        vue({
+            reactivityTransform: true,
+        }),
+        eslintPlugin({
+            cache: false,
+            include: ['src/**/*.js', 'src/**/*.jsx', 'src/**/*.ts', 'src/**/*.tsx', 'src/**/*.vue'],
+            exclude:['node_modules']
+        })
     ],
     resolve: {
         alias: {
