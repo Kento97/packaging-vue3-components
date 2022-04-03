@@ -3,21 +3,24 @@
     <el-button :type="type" @click="changeVisible">
       <slot>选择图标</slot>
     </el-button>
-    <el-dialog :model-value="visible" :title="title" @closed="handleClosed">
-      <div class="container">
-        <div class="border-container" v-for="(item,index) in Object.keys(ElIcons)" :key="index"
-        >
-          <div class="icon-text-item">
-            <div class="icon-container">
-              <el-icon :size="25">
-                <component :is="item" class="icon-item"></component>
-              </el-icon>
+    <div class="choose-icon-dialog-body-style">
+      <el-dialog :model-value="visible" :title="title" @closed="handleClosed">
+        <div class="container">
+          <div v-for="(item,index) in Object.keys(ElIcons)" :key="index" :title="item"
+               class="border-container">
+            <div class="icon-text-item">
+              <div class="icon-container">
+                <el-icon :size="25">
+                  <component :is="item" class="icon-item"></component>
+                </el-icon>
+              </div>
+              <div class="text-container">{{ item }}</div>
             </div>
-            <div class="text-container">{{ item }}</div>
           </div>
         </div>
-      </div>
-    </el-dialog>
+      </el-dialog>
+    </div>
+
   </div>
 </template>
 
@@ -39,7 +42,38 @@ const {changeVisible, title = "选择图标", visible = false, type = "primary"}
 const handleClosed = () => changeVisible();
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+//以下深度选择器也可以实现修改组件样式，本次采取命名空间来实现
+//:deep(.el-dialog__body) {
+//  height: 550px;
+//  overflow-y: scroll;
+//
+//  &::-webkit-scrollbar {
+//    width: 10px;
+//    height: 10px;
+//    /**/
+//  }
+//
+//  &::-webkit-scrollbar-track {
+//    background: rgb(239, 239, 239);
+//    border-radius: 2px;
+//  }
+//
+//  &::-webkit-scrollbar-thumb {
+//    background: #bfbfbf;
+//    border-radius: 10px;
+//  }
+//
+//  &::-webkit-scrollbar-thumb:hover {
+//    background: #333;
+//  }
+//
+//  &::-webkit-scrollbar-corner {
+//    background: #179a16;
+//  }
+//
+//}
+
 .container {
   display: flex;
   align-items: center;
@@ -70,6 +104,5 @@ const handleClosed = () => changeVisible();
       }
     }
   }
-
 }
 </style>

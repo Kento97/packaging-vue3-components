@@ -18,3 +18,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+html, body, #app, .el-container, .el-menu {
+    height: 100%;
+}

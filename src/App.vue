@@ -8,8 +8,5 @@ import {RouterView} from 'vue-router'
 
 <style lang="scss">
 @import "./assets/base.css";
-
-html, body, #app, .el-container, .el-menu {
-  height: 100%;
-}
+@import "./style/ui.scss";
 </style>
