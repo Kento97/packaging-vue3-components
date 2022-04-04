@@ -1,7 +1,19 @@
 <template>
-  <el-badge :value="value" :max="max" :is-dot="isDot">
-    <component :is="iconName" class="icon__item"></component>
-  </el-badge>
+  <el-popover
+      placement="bottom"
+      :width="300"
+      trigger="click"
+      content="this is content, this is content, this is content"
+  >
+    <template #reference>
+      <el-badge :value="value" :max="max" :is-dot="isDot">
+        <component :is="iconName" class="icon__item"></component>
+      </el-badge>
+    </template>
+    <template #default>
+      <slot>这是一段内容</slot>
+    </template>
+  </el-popover>
 </template>
 
 <script lang='ts' setup>

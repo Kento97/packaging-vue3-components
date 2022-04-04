@@ -3,6 +3,7 @@ import chooseArea from "./chooseArea";
 import chooseIcon from "./chooseIcon";
 import trend from "./trend";
 import myNotification from "./notification";
+import myList from "./list";
 
 
 const components = [
@@ -10,6 +11,7 @@ const components = [
     chooseIcon,
     trend,
     myNotification,
+    myList,
 ];
 
 export default {
