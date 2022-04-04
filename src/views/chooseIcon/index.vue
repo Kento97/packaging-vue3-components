@@ -8,12 +8,11 @@
 </template>
 
 <script lang='ts' setup>
-import ChooseIcon from "@/components/chooseIcon/src/index.vue";
 import {ref} from "vue";
 
-const visible = ref(false)
-const buttonType = ref<'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text'>("warning")
-const changeVisible = () => visible.value = !visible.value
+const visible = ref(false);
+const buttonType = ref<'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text'>("warning");
+const changeVisible = () => visible.value = !visible.value;
 const notVisible = () => visible.value = false;
 </script>
 

@@ -6,6 +6,7 @@ import router from './router';
 import * as Icons from "@element-plus/icons-vue";
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
+import myUI from "@/components";
 
 const app = createApp(App);
 //全局注册icons
@@ -21,4 +22,5 @@ for (const name in Icons) {
 app.use(createPinia());
 app.use(router);
 app.use(ElementPlus);
+app.use(myUI);
 app.mount('#app');

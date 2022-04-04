@@ -5,7 +5,6 @@
 </template>
 
 <script lang='ts' setup>
-import ChooseArea from "@/components/chooseArea/src/index.vue";
 
 interface IResult {
   code: string,

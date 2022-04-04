@@ -25,9 +25,9 @@
 
 <script lang='ts' setup>
 import * as ElIcons from "@element-plus/icons-vue";
-import {useClipboard} from '@vueuse/core'
+import {useClipboard} from '@vueuse/core';
 import {toLine} from "@/utils";
-import {ElMessage} from 'element-plus'
+import {ElMessage} from 'element-plus';
 
 interface IProps {
   //弹框的标题
@@ -41,10 +41,10 @@ interface IProps {
   notVisible: () => void,
 }
 
-const {changeVisible, notVisible, title = "选择图标", visible = false, type = "primary"} = defineProps<IProps>()
+const {changeVisible, notVisible, title = "选择图标", visible = false, type = "primary"} = defineProps<IProps>();
 const handleClosed = () => notVisible();
 //复制功能
-const {isSupported, copy} = useClipboard()
+const {isSupported, copy} = useClipboard();
 const handleCopy = (content: string) => {
   if (!isSupported) {
     ElMessage({
@@ -52,20 +52,20 @@ const handleCopy = (content: string) => {
       message: "Your browser does not support Clipboard API",
       center: true,
       duration: 1500
-    })
+    });
     return;
   }
-  const preCopiedStr = `<el-icon><${toLine(content)} /></el-icon>`
+  const preCopiedStr = `<el-icon><${toLine(content)} /></el-icon>`;
   copy(preCopiedStr).then(() => {
     ElMessage({
       type: 'success',
       message: "复制成功",
       center: true,
       duration: 1000
-    })
-  })
+    });
+  });
   notVisible();
-}
+};
 </script>
 
 <style lang="scss" scoped>
