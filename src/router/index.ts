@@ -29,6 +29,11 @@ const router = createRouter({
                     name: "trend",
                     component: () => import('@/views/trend/index.vue'),
                 },
+                {
+                    path: '/notification',
+                    name: "notification",
+                    component: () => import('@/views/notification/index.vue'),
+                },
             ]
         },
     ]

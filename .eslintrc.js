@@ -22,6 +22,8 @@ module.exports = {
     "rules": {
         "vue/multi-word-component-names": "off",
         "semi": [2, "always"],//语句强制分号结尾
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": ["off"],
     },
     "parser": "vue-eslint-parser",
 };

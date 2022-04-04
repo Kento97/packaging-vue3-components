@@ -2,12 +2,14 @@ import type {App} from "vue";
 import chooseArea from "./chooseArea";
 import chooseIcon from "./chooseIcon";
 import trend from "./trend";
+import myNotification from "./notification";
 
 
 const components = [
     chooseArea,
     chooseIcon,
-    trend
+    trend,
+    myNotification,
 ];
 
 export default {
