@@ -16,8 +16,8 @@
 
 <script lang='ts' setup>
 import {ref} from "vue";
-import NavSide from "@/components/navSide/index.vue";
-import NavHeader from "@/components/navHeader/index.vue";
+import NavSide from "@/layout/container/src/navSide/index.vue";
+import NavHeader from "@/layout/container/src/navHeader/index.vue";
 
 const isCollapse = ref(false);
 const toggle = () => isCollapse.value = !isCollapse.value;

@@ -24,6 +24,11 @@ const router = createRouter({
                     name: "chooseArea",
                     component: () => import('@/views/chooseArea/index.vue'),
                 },
+                {
+                    path: '/trend',
+                    name: "trend",
+                    component: () => import('@/views/trend/index.vue'),
+                },
             ]
         },
     ]
