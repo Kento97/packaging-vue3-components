@@ -1,6 +1,7 @@
 <template>
   <div>
-    <choose-icon :type="buttonType" :visible="visible" title="选择图标" :changeVisible="changeVisible">
+    <choose-icon :changeVisible="changeVisible" :notVisible="notVisible" :type="buttonType" :visible="visible"
+                 title="选择图标">
       选择图标
     </choose-icon>
   </div>
@@ -13,6 +14,7 @@ import {ref} from "vue";
 const visible = ref(false)
 const buttonType = ref<'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text'>("warning")
 const changeVisible = () => visible.value = !visible.value
+const notVisible = () => visible.value = false;
 </script>
 
 <style lang="scss" scoped>

@@ -37,11 +37,12 @@ interface IProps {
   //el-button的颜色
   type: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text',
   //改变弹框的可视状态（取反visible的值）
-  changeVisible: () => void
+  changeVisible: () => void,
+  notVisible: () => void,
 }
 
-const {changeVisible, title = "选择图标", visible = false, type = "primary"} = defineProps<IProps>()
-const handleClosed = () => changeVisible();
+const {changeVisible, notVisible, title = "选择图标", visible = false, type = "primary"} = defineProps<IProps>()
+const handleClosed = () => notVisible();
 //复制功能
 const {isSupported, copy} = useClipboard()
 const handleCopy = (content: string) => {
@@ -63,6 +64,7 @@ const handleCopy = (content: string) => {
       duration: 1000
     })
   })
+  notVisible();
 }
 </script>
 
