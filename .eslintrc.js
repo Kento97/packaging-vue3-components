@@ -20,7 +20,8 @@ module.exports = {
         "@typescript-eslint"
     ],
     "rules": {
-        "vue/multi-word-component-names": "off"
+        "vue/multi-word-component-names": "off",
+        "semi": [2, "always"],//语句强制分号结尾
     },
     "parser": "vue-eslint-parser",
 };

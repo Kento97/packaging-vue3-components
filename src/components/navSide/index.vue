@@ -33,7 +33,7 @@ interface IProps {
 }
 
 //解构props并且初始化，需要开启响应式语法糖 reactivityTransform: true
-const {isCollapse = false} = defineProps<IProps>()
+const {isCollapse = false} = defineProps<IProps>();
 </script>
 
 <style lang="scss" scoped>

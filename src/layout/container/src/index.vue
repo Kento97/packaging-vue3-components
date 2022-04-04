@@ -19,7 +19,7 @@ import {ref} from "vue";
 import NavSide from "@/components/navSide/index.vue";
 import NavHeader from "@/components/navHeader/index.vue";
 
-const isCollapse = ref(false)
+const isCollapse = ref(false);
 const toggle = () => isCollapse.value = !isCollapse.value;
 </script>
 

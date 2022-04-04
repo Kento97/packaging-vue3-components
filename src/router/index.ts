@@ -1,5 +1,5 @@
-import {createRouter, createWebHistory} from 'vue-router'
-import Home from '../views/Home.vue'
+import {createRouter, createWebHistory} from 'vue-router';
+import Home from '../views/Home.vue';
 import Container from "@/layout/container/src/index.vue";
 
 const router = createRouter({
@@ -18,10 +18,15 @@ const router = createRouter({
                     path: '/chooseIcon',
                     name: "chooseIcon",
                     component: () => import('@/views/chooseIcon/index.vue'),
-                }
+                },
+                {
+                    path: '/chooseArea',
+                    name: "chooseArea",
+                    component: () => import('@/views/chooseArea/index.vue'),
+                },
             ]
         },
     ]
-})
+});
 
-export default router
+export default router;

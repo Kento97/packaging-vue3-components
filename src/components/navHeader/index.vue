@@ -13,7 +13,7 @@ interface IProps {
   toggle: () => void
 }
 
-const {toggle, isCollapse = false} = defineProps<IProps>()
+const {toggle, isCollapse = false} = defineProps<IProps>();
 </script>
 
 <style lang="scss" scoped>
