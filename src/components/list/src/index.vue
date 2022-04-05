@@ -3,14 +3,13 @@
     <el-tabs>
       <el-tab-pane v-for="(item,index) in list" :key="index" :label="item.title">
         <el-scrollbar max-height="300px">
-          <div v-for="(item1,index1) in item.content" :key="index1" class="container">
+          <div v-for="(item1,index1) in item.content" :key="index1" class="container" @click="clickItem(item1,index1)">
             <div v-if="item1.avatar" class="avatar">
               <el-avatar :src="item1.avatar" alt="avatar" size="default" @error="errorHandler">
                 <img
                     alt="loadFailedImg"
                     src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"/>
               </el-avatar>
-              <!--            <el-avatar v-else>Task</el-avatar>-->
             </div>
             <div class="content">
               <div v-if="item1.title" class="title">
@@ -23,7 +22,7 @@
           </div>
         </el-scrollbar>
         <div class="actions">
-          <div class="a-item" v-for="(action,i) in actions" :key="i">
+          <div v-for="(action,i) in actions" :key="i" class="a-item" @click="clickAction(action,i)">
             <div class="a-icon">
               <component :is="action.icon"/>
             </div>
@@ -44,8 +43,19 @@ interface IProps {
   actions?: ActionOptions[],
 }
 
+interface IEmits {
+  (e: string, value: Record<string, number | ListItem | ActionOptions>): void
+}
+
 const {list, actions} = defineProps<IProps>();
+const emits = defineEmits<IEmits>();
 const errorHandler = () => true;
+const clickItem = (item: ListItem, index: number) => {
+  emits('clickItem', {item, index});
+};
+const clickAction = (action: ActionOptions, i: number) => {
+  emits('clickAction', {action, i});
+};
 </script>
 
 <style lang="scss" scoped>

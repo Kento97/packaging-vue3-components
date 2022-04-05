@@ -1,8 +1,8 @@
 <template>
   <div>
-    <my-notification iconName="Bell" :size="50" :value="50">
+    <my-notification :size="50" :value="50" iconName="Bell">
       <template #default>
-        <my-list :list="list" :actions="actions"></my-list>
+        <my-list :actions="actions" :list="list" @clickAction="clickAction" @clickItem="clickItem"></my-list>
       </template>
     </my-notification>
     <br>
@@ -17,9 +17,17 @@
   </div>
 </template>
 
-<script setup lang='ts'>
+<script lang='ts' setup>
 import {list, actions} from "./data";
+import type {ListItem, ActionOptions} from "@/components/list/src/type";
 
+function clickItem(val: { item: ListItem, index: number }) {
+  console.log(val);
+}
+
+function clickAction(val: { action: ActionOptions, i: number }) {
+  console.log(val);
+}
 </script>
 
 <style scoped>
