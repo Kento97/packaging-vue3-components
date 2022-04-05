@@ -1,9 +1,9 @@
 <template>
   <div class="header">
     <span @click="toggle">
-    <el-icon v-show="isCollapse" :size="25" style="cursor: pointer;"><expand/></el-icon>
-    <el-icon v-show="!isCollapse" :size="25" style="cursor: pointer;"><fold/></el-icon>
-  </span>
+      <el-icon v-show="isCollapse" :size="25" style="cursor: pointer;"><expand/></el-icon>
+      <el-icon v-show="!isCollapse" :size="25" style="cursor: pointer;"><fold/></el-icon>
+    </span>
   </div>
 </template>
 

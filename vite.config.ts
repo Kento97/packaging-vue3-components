@@ -1,7 +1,8 @@
-import {fileURLToPath, URL} from 'url'
+import {fileURLToPath, URL} from 'url';
+import vueJsx from "@vitejs/plugin-vue-jsx";
 
-import {defineConfig} from 'vite'
-import vue from '@vitejs/plugin-vue'
+import {defineConfig} from 'vite';
+import vue from '@vitejs/plugin-vue';
 import eslintPlugin from 'vite-plugin-eslint';
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -13,7 +14,8 @@ export default defineConfig({
             cache: false,
             include: ['src/**/*.js', 'src/**/*.jsx', 'src/**/*.ts', 'src/**/*.tsx', 'src/**/*.vue'],
             exclude: ['node_modules']
-        })
+        }),
+        vueJsx()
     ],
     resolve: {
         alias: {
@@ -34,4 +36,4 @@ export default defineConfig({
             }
         }
     },
-})
+});

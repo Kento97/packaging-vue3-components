@@ -8,13 +8,17 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     },
+    "jsx": "preserve",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment"
   },
-
   "references": [
     {
       "path": "./tsconfig.vite-config.json"
     }
-  ],
+  ]
 }
