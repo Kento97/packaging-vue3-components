@@ -2,6 +2,7 @@ import {defineComponent, h, useAttrs, resolveComponent} from "vue";
 import type {PropType} from "vue";
 import type {RouterType} from "@/router/routeType";
 import {toLine} from "@/utils";
+import "./menuStyle.scss";
 
 export default defineComponent({
     props: {
@@ -17,10 +18,6 @@ export default defineComponent({
             type: Boolean,
             default: false
         },
-        isCollapse: {
-            type: Boolean,
-            default: false
-        }
     },
     setup(props, ctx) {
         const renderMenu = (data: RouterType) => {
@@ -64,13 +61,13 @@ export default defineComponent({
         };
         const attrs = useAttrs();
         return () => {
-            const {defaultActive, router, data, isCollapse} = props;
+            const {defaultActive, router, data} = props;
             return (
                 <el-menu
                     default-active={defaultActive}
                     router={router}
-                    isCollapse={isCollapse}
                     {...attrs}
+                    class='el-menu-vertical-tsx'
                 >
                     {renderMenu(data)}
                 </el-menu>

@@ -1,15 +1,12 @@
 <template>
-  <div style="width: 250px;height: 100%;">
-    <my-infinite-menu
-        :data="routeList"
-        :defaultActive="$route.path"
-        :isCollapse="isCollapse"
-        :router="true"
-        active-text-color="pink"
-        background-color="#F2F6FC"
-    ></my-infinite-menu>
-  </div>
-
+  <my-infinite-menu
+      :data="routeList"
+      :defaultActive="$route.path"
+      :collapse="isCollapse"
+      :router="true"
+      active-text-color="pink"
+      background-color="#F2F6FC"
+  ></my-infinite-menu>
 </template>
 
 <script lang='ts' setup>
