@@ -34,18 +34,19 @@
         </el-col>
       </el-row>
       <div class="city">
-        <div v-for="(item) in Object.keys(citiesRef)" :key="item" class="city-item">
+        <!--字母区域-->
+        <div v-for="(item) in Object.keys(citiesRef)" :key="item" class="city-item" @click="clickChar(item)">
           {{ item }}
         </div>
       </div>
       <el-scrollbar max-height="300px">
         <div v-for="(value,key) in citiesRef" :key="key">
-          <el-row style="margin-bottom: 10px;">
+          <el-row :id="key" style="margin-bottom: 10px;">
             <el-col :span="2">
               {{ key }}:
             </el-col>
             <el-col :span="22" class="city-name">
-              <div v-for="(item) in value" :key="item.id" class="city-name-item">
+              <div v-for="(item) in value" :key="item.id" class="city-name-item" @click="clickItem(item)">
                 {{ item.name }}
               </div>
             </el-col>
@@ -61,6 +62,17 @@ import {ref} from "vue";
 import cities from "../lib/city";
 import type {CitiesType} from "../lib/citiesType";
 
+interface ICityItem {
+  id: number,
+  spell: string,
+  name: string
+}
+
+interface IEmits {
+  (e: string, value: ICityItem): void
+}
+
+const emits = defineEmits<IEmits>();
 // interface IProps {
 //
 // }
@@ -95,6 +107,17 @@ const options = ref([
   },
 ]);
 const rotateDeg = ref<"0deg" | "180deg">("0deg");
+
+function clickChar(char: string) {
+  document.getElementById(char)?.scrollIntoView();
+}
+
+function clickItem(city: ICityItem) {
+  result.value = city.name;
+  visible.value = false;
+  toggleRotateDeg();
+  emits("change", city);
+}
 
 function togglePopover() {
   visible.value = !visible.value;
@@ -146,7 +169,7 @@ $rotateDeg: v-bind('rotateDeg');
     border-radius: 4px;
 
     &:hover {
-      background-color: lightskyblue;
+      background-color: lightpink;
     }
   }
 }
@@ -160,6 +183,7 @@ $rotateDeg: v-bind('rotateDeg');
     width: fit-content;
     margin-right: 6px;
     margin-bottom: 6px;
+    cursor: pointer;
   }
 }
 </style>
