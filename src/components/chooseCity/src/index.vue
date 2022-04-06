@@ -23,12 +23,19 @@
           </el-radio-group>
         </el-col>
         <el-col :offset="2" :span="14">
-          <el-select v-model="selectValue" filterable no-match-text="没有相关信息" placeholder="请选择城市">
+          <el-select
+              v-model="selectValue"
+              :filter-method="filterMethod"
+              filterable
+              no-match-text="没有相关信息"
+              placeholder="请搜索城市"
+              @change="chooseSelectItem"
+          >
             <el-option
                 v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
             />
           </el-select>
         </el-col>
@@ -71,7 +78,7 @@
                 </el-col>
                 <el-col :span="21" class="province-name">
                   <div v-for="(item2,index2) in item1.data" :key="index2" class="province-name-item"
-                       @click="clickProvinceItem(item1)">
+                       @click="clickProvinceItem(item2)">
                     {{ item2 }}
                   </div>
                 </el-col>
@@ -85,7 +92,7 @@
 </template>
 
 <script lang='ts' setup>
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import cities from "../lib/city";
 import provinceWithCities from "../lib/province-city";
 
@@ -104,45 +111,58 @@ interface IProvince {
 }
 
 interface IEmits {
-  (e: string, value: ICityItem | IProvince): void
+  (e: string, value: ICityItem | string): void
 }
 
 const emits = defineEmits<IEmits>();
-// interface IProps {
-//
-// }
-//
-// const props = defineProps<IProps>();
-
 const result = ref("请选择");
 const visible = ref(false);
-const radioVal = ref("按省份");
+const radioVal = ref<'按省份' | '按城市'>("按城市");
 const selectValue = ref("");
 const citiesRef = ref<CitiesType>(cities.cities);
 const provinceWithCitiesRef = ref<province_city_type>(provinceWithCities);
-const options = ref([
-  {
-    value: 'Option1',
-    label: 'Option1',
-  },
-  {
-    value: 'Option2',
-    label: 'Option2',
-  },
-  {
-    value: 'Option3',
-    label: 'Option3',
-  },
-  {
-    value: 'Option4',
-    label: 'Option4',
-  },
-  {
-    value: 'Option5',
-    label: 'Option5',
-  },
-]);
 const rotateDeg = ref<"0deg" | "180deg">("0deg");
+const options = ref<ICityItem[]>();
+let value: ICityItem[] = [];
+onMounted(() => {
+  //获取下拉框待过滤的城市数据，非ref
+  value = getSelectOptions();
+});
+
+
+function chooseSelectItem(val: number) {
+  const targetCityName = value.find((item) => {
+    return item.id === val;
+  });
+  if (targetCityName) result.value = targetCityName.name;
+  togglePopover();
+  if (radioVal.value === "按城市" && targetCityName) {
+    emits('changeCity', targetCityName);
+  } else {
+    targetCityName && emits('changeCity', targetCityName.name);
+  }
+}
+
+function filterMethod(val: string) {
+  if (!val) {
+    getSelectOptions();
+  } else {
+    if (radioVal.value === "按城市") {
+      //中文和拼音一起过滤
+      options.value = value?.filter((item) => item.name.includes(val) || item.spell.includes(val));
+    } else {
+      //中文过滤
+      options.value = value?.filter((item) => item.name.includes(val));
+    }
+  }
+}
+
+function getSelectOptions() {
+  options.value = Object.values(cities.cities).reduce((prev, curr) => {
+    return prev.concat(curr);
+  }, []);
+  return options.value;
+}
 
 function clickChar(char: string) {
   document.getElementById(char)?.scrollIntoView();
@@ -150,24 +170,18 @@ function clickChar(char: string) {
 
 function clickItem(item: ICityItem) {
   result.value = item.name;
-  visible.value = false;
-  toggleRotateDeg();
+  togglePopover();
   emits("changeCity", item);
 }
 
-function clickProvinceItem(item: IProvince) {
-  result.value = item.name;
-  visible.value = false;
-  toggleRotateDeg();
+function clickProvinceItem(item: string) {
+  result.value = item;
+  togglePopover();
   emits("changeProvince", item);
 }
 
 function togglePopover() {
   visible.value = !visible.value;
-  toggleRotateDeg();
-}
-
-function toggleRotateDeg() {
   rotateDeg.value === '0deg' ? rotateDeg.value = '180deg' : rotateDeg.value = '0deg';
 }
 </script>
