@@ -97,6 +97,16 @@ const routes = [
                 component: () => import('@/views/chooseDate/index.vue'),
                 children: []
             },
+            {
+                path: '/chooseCity',
+                name: "chooseCity",
+                meta: {
+                    label: '城市选择',
+                    icon: 'Eleme'
+                },
+                component: () => import('@/views/chooseCity/index.vue'),
+                children: []
+            },
         ]
     },
 ];

@@ -24,6 +24,7 @@ module.exports = {
         "semi": [2, "always"],//语句强制分号结尾
         "no-unused-vars": "off",
         "@typescript-eslint/no-unused-vars": ["off"],
+        "vue/no-v-model-argument": "off"
     },
     "parser": "vue-eslint-parser",
 };
