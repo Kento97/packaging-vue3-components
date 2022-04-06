@@ -67,6 +67,16 @@ const routes = [
                 component: () => import('@/views/menu/index.vue'),
                 children: []
             },
+            {
+                path: '/progress',
+                name: "progress",
+                meta: {
+                    label: '进度条',
+                    icon: 'ForkSpoon'
+                },
+                component: () => import('@/views/progress/index.vue'),
+                children: []
+            },
         ]
     },
 ];

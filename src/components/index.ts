@@ -5,7 +5,7 @@ import trend from "./trend";
 import myNotification from "./notification";
 import myList from "./list";
 import myMenu from "./menu";
-import myInfiniteMenu from "./menu/src/menu.js";
+import progress from "./progress";
 
 
 const components = [
@@ -15,6 +15,7 @@ const components = [
     myNotification,
     myList,
     myMenu,
+    progress
 ];
 
 export default {
