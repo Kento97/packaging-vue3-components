@@ -6,6 +6,7 @@ import myNotification from "./notification";
 import myList from "./list";
 import myMenu from "./menu";
 import progress from "./progress";
+import chooseTime from "./chooseTime";
 
 
 const components = [
@@ -15,7 +16,8 @@ const components = [
     myNotification,
     myList,
     myMenu,
-    progress
+    progress,
+    chooseTime
 ];
 
 export default {

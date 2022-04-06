@@ -77,6 +77,16 @@ const routes = [
                 component: () => import('@/views/progress/index.vue'),
                 children: []
             },
+            {
+                path: '/chooseTime',
+                name: "chooseTime",
+                meta: {
+                    label: '时间选择器',
+                    icon: 'HotWater'
+                },
+                component: () => import('@/views/chooseTime/index.vue'),
+                children: []
+            },
         ]
     },
 ];
