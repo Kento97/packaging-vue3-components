@@ -33,26 +33,53 @@
           </el-select>
         </el-col>
       </el-row>
-      <div class="city">
-        <!--字母区域-->
-        <div v-for="(item) in Object.keys(citiesRef)" :key="item" class="city-item" @click="clickChar(item)">
-          {{ item }}
+      <template v-if="radioVal==='按城市'">
+        <div class="city">
+          <!--字母区域-->
+          <div v-for="(item) in Object.keys(citiesRef)" :key="item" class="city-item" @click="clickChar(item)">
+            {{ item }}
+          </div>
         </div>
-      </div>
-      <el-scrollbar max-height="300px">
-        <div v-for="(value,key) in citiesRef" :key="key">
-          <el-row :id="key" style="margin-bottom: 10px;">
-            <el-col :span="2">
-              {{ key }}:
-            </el-col>
-            <el-col :span="22" class="city-name">
-              <div v-for="(item) in value" :key="item.id" class="city-name-item" @click="clickItem(item)">
-                {{ item.name }}
-              </div>
-            </el-col>
-          </el-row>
+        <el-scrollbar max-height="300px">
+          <div v-for="(value,key) in citiesRef" :key="key">
+            <el-row :id="key" style="margin-bottom: 10px;">
+              <el-col :span="2">
+                {{ key }}:
+              </el-col>
+              <el-col :span="22" class="city-name">
+                <div v-for="(item) in value" :key="item.id" class="city-name-item" @click="clickItem(item)">
+                  {{ item.name }}
+                </div>
+              </el-col>
+            </el-row>
+          </div>
+        </el-scrollbar>
+      </template>
+      <template v-else>
+        <div class="province">
+          <div v-for="(item) in Object.keys(provinceWithCitiesRef)" :key="item" class="province-item"
+               @click="clickChar(item)">
+            {{ item }}
+          </div>
         </div>
-      </el-scrollbar>
+        <el-scrollbar max-height="300px">
+          <div v-for="(item,index) in Object.values(provinceWithCitiesRef)" :key="index">
+            <div v-for="(item1,index1) in item" :key="index1">
+              <el-row :id="item1.id" style="margin-bottom: 10px;">
+                <el-col :span="3">
+                  {{ item1.name }}:
+                </el-col>
+                <el-col :span="21" class="province-name">
+                  <div v-for="(item2,index2) in item1.data" :key="index2" class="province-name-item"
+                       @click="clickProvinceItem(item1)">
+                    {{ item2 }}
+                  </div>
+                </el-col>
+              </el-row>
+            </div>
+          </div>
+        </el-scrollbar>
+      </template>
     </div>
   </el-popover>
 </template>
@@ -60,7 +87,9 @@
 <script lang='ts' setup>
 import {ref} from "vue";
 import cities from "../lib/city";
-import type {CitiesType} from "../lib/citiesType";
+import provinceWithCities from "../lib/province-city";
+
+import type {CitiesType, province_city_type} from "../lib/citiesType";
 
 interface ICityItem {
   id: number,
@@ -68,8 +97,14 @@ interface ICityItem {
   name: string
 }
 
+interface IProvince {
+  name: string,
+  data: string[]
+  id?: string
+}
+
 interface IEmits {
-  (e: string, value: ICityItem): void
+  (e: string, value: ICityItem | IProvince): void
 }
 
 const emits = defineEmits<IEmits>();
@@ -81,9 +116,10 @@ const emits = defineEmits<IEmits>();
 
 const result = ref("请选择");
 const visible = ref(false);
-const radioVal = ref("按城市");
+const radioVal = ref("按省份");
 const selectValue = ref("");
 const citiesRef = ref<CitiesType>(cities.cities);
+const provinceWithCitiesRef = ref<province_city_type>(provinceWithCities);
 const options = ref([
   {
     value: 'Option1',
@@ -112,11 +148,18 @@ function clickChar(char: string) {
   document.getElementById(char)?.scrollIntoView();
 }
 
-function clickItem(city: ICityItem) {
-  result.value = city.name;
+function clickItem(item: ICityItem) {
+  result.value = item.name;
   visible.value = false;
   toggleRotateDeg();
-  emits("change", city);
+  emits("changeCity", item);
+}
+
+function clickProvinceItem(item: IProvince) {
+  result.value = item.name;
+  visible.value = false;
+  toggleRotateDeg();
+  emits("changeProvince", item);
 }
 
 function togglePopover() {
@@ -180,6 +223,40 @@ $rotateDeg: v-bind('rotateDeg');
   flex-wrap: wrap;
 
   .city-name-item {
+    width: fit-content;
+    margin-right: 6px;
+    margin-bottom: 6px;
+    cursor: pointer;
+  }
+}
+
+.province {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  .province-item {
+    padding: 3px 6px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #eee;
+    cursor: pointer;
+    border-radius: 4px;
+
+    &:hover {
+      background-color: lightpink;
+    }
+  }
+}
+
+.province-name {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  .province-name-item {
     width: fit-content;
     margin-right: 6px;
     margin-bottom: 6px;
