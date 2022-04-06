@@ -87,6 +87,16 @@ const routes = [
                 component: () => import('@/views/chooseTime/index.vue'),
                 children: []
             },
+            {
+                path: '/chooseDate',
+                name: "chooseDate",
+                meta: {
+                    label: '日期选择器',
+                    icon: 'Calendar'
+                },
+                component: () => import('@/views/chooseDate/index.vue'),
+                children: []
+            },
         ]
     },
 ];

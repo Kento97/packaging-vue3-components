@@ -7,6 +7,7 @@ import myList from "./list";
 import myMenu from "./menu";
 import progress from "./progress";
 import chooseTime from "./chooseTime";
+import chooseDate from "./chooseDate";
 
 
 const components = [
@@ -17,7 +18,8 @@ const components = [
     myList,
     myMenu,
     progress,
-    chooseTime
+    chooseTime,
+    chooseDate
 ];
 
 export default {
