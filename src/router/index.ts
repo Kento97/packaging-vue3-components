@@ -107,6 +107,16 @@ const routes = [
                 component: () => import('@/views/chooseCity/index.vue'),
                 children: []
             },
+            {
+                path: '/form',
+                name: "form",
+                meta: {
+                    label: '表单',
+                    icon: 'Setting'
+                },
+                component: () => import('@/views/form/index.vue'),
+                children: []
+            },
         ]
     },
 ];
