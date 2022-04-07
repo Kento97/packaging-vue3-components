@@ -1,6 +1,28 @@
 <template>
   <div>
-    <my-form :options="options" label-width="100px"/>
+    <my-form
+        :limit="3"
+        :options="options"
+        label-width="100px"
+        multiple
+        @on-preview="handlePreview"
+        @on-remove="handleRemove"
+        @before-remove="beforeRemove"
+        @on-exceed="handleExceed"
+        @on-success="handleSuccess"
+        @on-change="handleChange"
+        @before-upload="handleBeforeUpload"
+        :fileList="fileList"
+    >
+      <template #uploadArea>
+        <el-button size="small" type="primary">Click to upload</el-button>
+      </template>
+      <template #uploadTip>
+        <div style="color: #ccc;font-size: 12px;">
+          jpg/png files with a size less than 500KB.
+        </div>
+      </template>
+    </my-form>
   </div>
 </template>
 
@@ -8,7 +30,18 @@
 
 import {ref} from "vue";
 import type {FormOptions} from "@/components/form/src/types/types";
+import {ElMessage, ElMessageBox, type UploadProps, type UploadUserFile} from 'element-plus';
 
+const fileList = ref<UploadUserFile[]>([
+  {
+    name: 'food.jpeg',
+    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
+  },
+  {
+    name: 'food2.jpeg',
+    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
+  },
+]);
 const options: FormOptions[] = [
   {
     type: 'input',
@@ -151,7 +184,62 @@ const options: FormOptions[] = [
       }
     ]
   },
+  {
+    type: 'upload',
+    label: '上传',
+    prop: 'pic',
+    uploadAttrs: {
+      action: 'https://jsonplaceholder.typicode.com/posts/'
+    },
+    rules: [
+      {
+        required: true,
+        message: '图片不能为空',
+      }
+    ],
+  }
 ];
+const handleChange = (val: any) => {
+  console.log('handleChange');
+  console.log(val);
+};
+
+const handleBeforeUpload = (rawFile: any) => {
+  console.log('handleBeforeUpload');
+  console.log(rawFile);
+};
+const handleRemove: UploadProps['onRemove'] = (val: any) => {
+  console.log('handleRemove');
+  console.log(val);
+};
+
+const handlePreview: UploadProps['onPreview'] = (uploadFile) => {
+  console.log('handlePreview');
+  console.log(uploadFile);
+};
+
+const handleExceed: UploadProps['onExceed'] = (val: any) => {
+  console.log('handleExceed');
+  ElMessage.warning(
+      `The limit is 3, you selected ${val.files.length} files this time, add up to ${
+          val.files.length + val.uploadFiles.length
+      } totally`
+  );
+};
+const beforeRemove: UploadProps['beforeRemove'] = (val: any) => {
+  console.log('beforeRemove');
+  return ElMessageBox.confirm(
+      `Cancel the transfert of ${val.uploadFile.name} ?`
+  ).then(
+      () => true,
+      () => false
+  );
+};
+
+const handleSuccess = (val: any) => {
+  console.log('success');
+  console.log(val);
+};
 </script>
 
 <style scoped>
