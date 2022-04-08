@@ -25,7 +25,6 @@
             :on-remove="onRemove"
             :on-success="onSuccess"
             v-bind="item.uploadAttrs"
-            :file-list="fileList"
         >
           <slot name="uploadArea"></slot>
           <slot name="uploadTip"></slot>
@@ -66,14 +65,12 @@ import type {UploadUserFile} from "element-plus";
 interface IProps {
   //表单的配置项
   options: FormOptions[],
-  fileList: UploadUserFile[]
 }
 
-const {options, fileList} = defineProps<IProps>();
+const {options} = defineProps<IProps>();
 
 const model = ref<Record<string, any>>();
 const rules = ref<Record<string, RuleItem[]>>();
-const gender = ref<string>("男");
 initForm();
 
 function initForm() {
@@ -118,6 +115,7 @@ const onChange = (uploadFile: UploadFile, uploadFiles: UploadFiles) => {
   emits('on-change', {uploadFile, uploadFiles});
 };
 const onExceed = (files: File[], uploadFiles: UploadFiles) => {
+  console.log('溢出');
   emits('on-exceed', {files, uploadFiles});
 };
 const beforeUpload: any = (rawFile: UploadRawFile) => {

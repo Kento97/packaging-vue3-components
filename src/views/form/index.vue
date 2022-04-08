@@ -1,7 +1,6 @@
 <template>
   <div>
     <my-form
-        :limit="3"
         :options="options"
         label-width="100px"
         multiple
@@ -12,7 +11,6 @@
         @on-success="handleSuccess"
         @on-change="handleChange"
         @before-upload="handleBeforeUpload"
-        :fileList="fileList"
     >
       <template #uploadArea>
         <el-button size="small" type="primary">Click to upload</el-button>
@@ -189,7 +187,9 @@ const options: FormOptions[] = [
     label: '上传',
     prop: 'pic',
     uploadAttrs: {
-      action: 'https://jsonplaceholder.typicode.com/posts/'
+      action: 'https://jsonplaceholder.typicode.com/posts/',
+      limit: 3,
+      fileList: fileList.value
     },
     rules: [
       {
