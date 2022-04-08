@@ -3,7 +3,6 @@
     <my-form
         :options="options"
         label-width="100px"
-        multiple
         @on-preview="handlePreview"
         @on-remove="handleRemove"
         @before-remove="beforeRemove"
@@ -189,7 +188,8 @@ const options: FormOptions[] = [
     uploadAttrs: {
       action: 'https://jsonplaceholder.typicode.com/posts/',
       limit: 3,
-      fileList: fileList.value
+      fileList: fileList.value,
+      multiple: true
     },
     rules: [
       {
