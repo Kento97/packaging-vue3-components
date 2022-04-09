@@ -19,6 +19,13 @@
           jpg/png files with a size less than 500KB.
         </div>
       </template>
+      <template #action="scope">
+        <el-button type="primary" @click="submitForm(scope)"
+        >Create
+        </el-button
+        >
+        <el-button @click="resetForm(scope)">Reset</el-button>
+      </template>
     </my-form>
   </div>
 </template>
@@ -28,17 +35,29 @@
 import {ref} from "vue";
 import type {FormOptions} from "@/components/form/src/types/types";
 import {ElMessage, ElMessageBox, type UploadProps, type UploadUserFile} from 'element-plus';
+import type {FormInstance} from 'element-plus';
 
-const fileList = ref<UploadUserFile[]>([
-  {
-    name: 'food.jpeg',
-    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
-  },
-  {
-    name: 'food2.jpeg',
-    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
-  },
-]);
+interface IScope {
+  form: FormInstance,
+  model: any
+}
+
+
+function submitForm(scope: IScope) {
+  scope.form.validate((valid) => {
+    if (valid) {
+      console.log(scope.model);
+      ElMessage.success("验证成功");
+    } else {
+      ElMessage.error("验证失败");
+    }
+  });
+}
+
+function resetForm(scope: IScope) {
+  scope.form.resetFields();
+}
+
 const options: FormOptions[] = [
   {
     type: 'input',
@@ -188,7 +207,6 @@ const options: FormOptions[] = [
     uploadAttrs: {
       action: 'https://jsonplaceholder.typicode.com/posts/',
       limit: 3,
-      fileList: fileList.value,
       multiple: true
     },
     rules: [

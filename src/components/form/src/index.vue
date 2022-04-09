@@ -1,5 +1,5 @@
 <template>
-  <el-form v-if="model" :model="model" :rules="rules" :validate-on-rule-change="false" v-bind="$attrs">
+  <el-form v-if="model" ref="form" :model="model" :rules="rules" :validate-on-rule-change="false" v-bind="$attrs">
     <template v-for="(item,index) in options">
       <el-form-item
           v-if="!item.children || item.children.length===0"
@@ -16,7 +16,6 @@
             v-else
             :before-remove="beforeRemove"
             :before-upload="beforeUpload"
-            :http-request="httpRequest"
             :on-change="onChange"
             :on-error="onError"
             :on-exceed="onExceed"
@@ -50,6 +49,9 @@
         </component>
       </el-form-item>
     </template>
+    <el-form-item>
+      <slot :form="form" :model="model" name="action"></slot>
+    </el-form-item>
   </el-form>
 </template>
 
@@ -59,8 +61,16 @@ import type {FormOptions} from "@/components/form/src/types/types";
 import {ref, watch} from "vue";
 import cloneDeep from "lodash/cloneDeep";
 import type {RuleItem} from "@/components/form/src/types/rule";
-import type {UploadFile, UploadFiles, UploadProgressEvent, UploadRawFile, UploadRequestOptions} from "element-plus";
+import type {
+  UploadFile,
+  UploadFiles,
+  UploadProgressEvent,
+  UploadProps,
+  UploadRawFile,
+  UploadRequestOptions
+} from "element-plus";
 import type {UploadUserFile} from "element-plus";
+import type {FormInstance} from 'element-plus';
 
 interface IProps {
   //表单的配置项
@@ -68,6 +78,8 @@ interface IProps {
 }
 
 const {options} = defineProps<IProps>();
+
+const form = ref<FormInstance>();
 
 const model = ref<Record<string, any>>();
 const rules = ref<Record<string, RuleItem[]>>();
@@ -102,7 +114,11 @@ const onPreview = (uploadFile: UploadFile) => {
 const onRemove = (uploadFile: UploadFile, uploadFiles: UploadFiles) => {
   emits('on-remove', {uploadFile, uploadFiles});
 };
-const onSuccess = (response: any, uploadFile: UploadFile, uploadFiles: UploadFiles) => {
+const onSuccess: UploadProps['onSuccess'] = (response: any, uploadFile: UploadFile, uploadFiles: UploadFiles) => {
+  const uploadItem = options.find((item) => item.type === 'upload');
+  if (uploadItem && uploadItem.prop && model.value) {
+    model.value[uploadItem.prop] = {response, uploadFile, uploadFiles};
+  }
   emits('on-success', {response, uploadFile, uploadFiles});
 };
 const onError = (error: Error, uploadFile: UploadFile, uploadFiles: UploadFiles) => {
