@@ -56,6 +56,7 @@ function submitForm(scope: IScope) {
 
 function resetForm(scope: IScope) {
   scope.form.resetFields();
+  
 }
 
 const options: FormOptions[] = [
@@ -213,6 +214,20 @@ const options: FormOptions[] = [
       {
         required: true,
         message: '图片不能为空',
+      }
+    ],
+  },
+  {
+    type: 'editor',
+    value: '123',
+    prop: 'desc',
+    label: '描述',
+    placeholder: "请输入描述",
+    rules: [
+      {
+        required: true,
+        message: '描述不能为空',
+        trigger: 'blur'
       }
     ],
   }

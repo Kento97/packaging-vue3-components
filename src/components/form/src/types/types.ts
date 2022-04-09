@@ -10,7 +10,7 @@ export interface FormOptions {
     type: 'cascader' | 'checkbox' | 'checkbox-group' | 'checkbox-button' | 'color-picker'
         | 'date-picker' | 'input' | 'input-number' | 'radio' | 'radio-group' | 'radio-button'
         | 'rate' | 'select' | 'option' | 'slider' | 'switch' | 'time-picker' | 'time-select'
-        | 'transfer' | 'upload',
+        | 'transfer' | 'upload' | 'editor'
     //表单项的值
     value?: any,
     //表单项的label

@@ -15,7 +15,8 @@
     "lodash": "^4.17.21",
     "pinia": "^2.0.13",
     "vue": "^3.2.31",
-    "vue-router": "^4.0.14"
+    "vue-router": "^4.0.14",
+    "wangeditor": "^4.7.13"
   },
   "devDependencies": {
     "@types/node": "^16.11.26",

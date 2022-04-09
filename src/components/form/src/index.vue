@@ -8,12 +8,12 @@
           :prop="item.prop">
         <component
             :is="`el-${item.type}`"
-            v-if="item.type !== 'upload'"
+            v-if="item.type !== 'upload' && item.type!=='editor'"
             v-model="model[item.prop]"
             v-bind="item.attrs"
         />
         <el-upload
-            v-else
+            v-if="item.type === 'upload'"
             :before-remove="beforeRemove"
             :before-upload="beforeUpload"
             :on-change="onChange"
@@ -28,6 +28,7 @@
           <slot name="uploadArea"></slot>
           <slot name="uploadTip"></slot>
         </el-upload>
+        <div v-if="item.type === 'editor'" id="editor"></div>
       </el-form-item>
       <el-form-item
           v-if="item.children && item.children.length!==0"
@@ -56,9 +57,9 @@
 </template>
 
 <script lang='ts' setup>
-
+import E from "wangeditor";
 import type {FormOptions} from "@/components/form/src/types/types";
-import {ref, watch} from "vue";
+import {nextTick, ref, watch} from "vue";
 import cloneDeep from "lodash/cloneDeep";
 import type {RuleItem} from "@/components/form/src/types/rule";
 import type {
@@ -92,6 +93,21 @@ function initForm() {
     options.forEach((item: FormOptions) => {
       m[item.prop as string] = item.value;
       r[item.prop as string] = item.rules as RuleItem[];
+      if (item.type === 'editor') {
+        //初始化富文本
+        nextTick(() => {
+          if (document.getElementById('editor')) {
+            const editor = new E("#editor");
+            editor.config.placeholder = item.placeholder as string;
+            editor.create();
+            editor.txt.html(item.value); // 初始化编辑器内容
+            // 配置 onchange 回调函数
+            editor.config.onchange = (newHTML: string) => {
+              (model.value as Record<string, any>)[item.prop as string] = newHTML;
+            };
+          }
+        });
+      }
     });
     model.value = cloneDeep(m);
     rules.value = cloneDeep(r);
