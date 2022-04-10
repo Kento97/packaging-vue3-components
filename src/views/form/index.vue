@@ -1,6 +1,7 @@
 <template>
   <div>
     <my-form
+        ref="form"
         :options="options"
         label-width="100px"
         @on-preview="handlePreview"
@@ -10,6 +11,7 @@
         @on-success="handleSuccess"
         @on-change="handleChange"
         @before-upload="handleBeforeUpload"
+        @clearFileList="clearFileList"
     >
       <template #uploadArea>
         <el-button size="small" type="primary">Click to upload</el-button>
@@ -24,7 +26,7 @@
         >Create
         </el-button
         >
-        <el-button @click="resetForm(scope)">Reset</el-button>
+        <el-button @click="resetForm">Reset</el-button>
       </template>
     </my-form>
   </div>
@@ -49,17 +51,28 @@ function submitForm(scope: IScope) {
       console.log(scope.model);
       ElMessage.success("验证成功");
     } else {
+      console.log(scope.model);
       ElMessage.error("验证失败");
     }
   });
 }
 
-function resetForm(scope: IScope) {
-  scope.form.resetFields();
-  
+function resetForm() {
+  form.value.resetFields();
 }
 
-const options: FormOptions[] = [
+const fileList = ref<UploadUserFile[]>([]);
+
+function clearFileList() {
+  fileList.value.splice(0);
+}
+
+// function clearFileList() {
+//   fileList.value = [];
+// }
+
+const form = ref();
+const options = ref<FormOptions[]>([
   {
     type: 'input',
     value: 'admin',
@@ -208,7 +221,8 @@ const options: FormOptions[] = [
     uploadAttrs: {
       action: 'https://jsonplaceholder.typicode.com/posts/',
       limit: 3,
-      multiple: true
+      multiple: true,
+      fileList: fileList.value
     },
     rules: [
       {
@@ -231,7 +245,7 @@ const options: FormOptions[] = [
       }
     ],
   }
-];
+]);
 const handleChange = (val: any) => {
   console.log('handleChange');
   console.log(val);

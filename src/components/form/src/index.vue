@@ -12,8 +12,10 @@
             v-model="model[item.prop]"
             v-bind="item.attrs"
         />
+        <div v-if="item.type === 'editor'" id="editor" style="position: relative;z-index: 0;"></div>
         <el-upload
             v-if="item.type === 'upload'"
+            ref="uploadInstance"
             :before-remove="beforeRemove"
             :before-upload="beforeUpload"
             :on-change="onChange"
@@ -28,7 +30,6 @@
           <slot name="uploadArea"></slot>
           <slot name="uploadTip"></slot>
         </el-upload>
-        <div v-if="item.type === 'editor'" id="editor"></div>
       </el-form-item>
       <el-form-item
           v-if="item.children && item.children.length!==0"
@@ -65,12 +66,12 @@ import type {RuleItem} from "@/components/form/src/types/rule";
 import type {
   UploadFile,
   UploadFiles,
+  UploadInstance,
   UploadProgressEvent,
   UploadProps,
   UploadRawFile,
   UploadRequestOptions
 } from "element-plus";
-import type {UploadUserFile} from "element-plus";
 import type {FormInstance} from 'element-plus';
 
 interface IProps {
@@ -84,6 +85,9 @@ const form = ref<FormInstance>();
 
 const model = ref<Record<string, any>>();
 const rules = ref<Record<string, RuleItem[]>>();
+const edit = ref<E>();
+let isInitEditor = true;
+const uploadInstance = ref<UploadInstance>();
 initForm();
 
 function initForm() {
@@ -93,7 +97,7 @@ function initForm() {
     options.forEach((item: FormOptions) => {
       m[item.prop as string] = item.value;
       r[item.prop as string] = item.rules as RuleItem[];
-      if (item.type === 'editor') {
+      if (item.type === 'editor' && isInitEditor) {
         //初始化富文本
         nextTick(() => {
           if (document.getElementById('editor')) {
@@ -105,22 +109,43 @@ function initForm() {
             editor.config.onchange = (newHTML: string) => {
               (model.value as Record<string, any>)[item.prop as string] = newHTML;
             };
+            edit.value = editor;
           }
         });
       }
     });
-    model.value = cloneDeep(m);
-    rules.value = cloneDeep(r);
+    if (isInitEditor) {
+      model.value = cloneDeep(m);
+      rules.value = cloneDeep(r);
+    }
   }
 }
 
+//重置表单
+const resetFields = () => {
+  //重置element plus表单
+  form.value?.resetFields();
+  //重置富文本编辑器的内容
+  if (options && options.length) {
+    const editorItem = options.find((item) => item.type === 'editor');
+    edit.value?.txt.html((editorItem as FormOptions).value);
+  }
+  //清除文件上传列表
+  uploadInstance.value?.clearFiles();
+  emits('clearFileList');
+};
+defineExpose({
+  resetFields
+});
+
 //监听父组件传递进来的 options
-watch(() => options, (val) => {
-  initForm();
-}, {deep: true});
+// watch(() => options, (val) => {
+//   isInitEditor = false;
+//   initForm();
+// }, {deep: true});
 
 const emits = defineEmits([
-  'on-preview', 'on-remove', 'on-success', 'on-error', 'on-progress', 'on-change', 'on-exceed', 'before-upload', 'before-remove', 'http-request'
+  'on-preview', 'on-remove', 'on-success', 'on-error', 'on-progress', 'on-change', 'on-exceed', 'before-upload', 'before-remove', 'http-request', 'clearFileList'
 ]);
 
 //上传组件的所有方法
