@@ -117,6 +117,16 @@ const routes = [
                 component: () => import('@/views/form/index.vue'),
                 children: []
             },
+            {
+                path: '/modalForm',
+                name: "modalForm",
+                meta: {
+                    label: '模态框',
+                    icon: 'Setting'
+                },
+                component: () => import('@/views/modalForm/index.vue'),
+                children: []
+            },
         ]
     },
 ];
