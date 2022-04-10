@@ -121,6 +121,14 @@ function initForm() {
   }
 }
 
+//表单验证
+const validate = () => {
+  return form.value?.validate;
+};
+//获取表单数据
+const getFormData = () => {
+  return model.value;
+};
 //重置表单
 const resetFields = () => {
   //重置element plus表单
@@ -135,7 +143,7 @@ const resetFields = () => {
   emits('clearFileList');
 };
 defineExpose({
-  resetFields
+  resetFields, validate, getFormData
 });
 
 //监听父组件传递进来的 options

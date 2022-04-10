@@ -6,7 +6,7 @@
 //5.在组件内需要改样式的元素的父元素加上这个类名
 .choose-icon-dialog-body-style {
   .el-dialog__body {
-    height: 550px;
+    height: 400px;
     overflow-y: scroll;
 
     &::-webkit-scrollbar {
