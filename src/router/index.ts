@@ -126,6 +126,15 @@ const routes = [
                 },
                 component: () => import('@/views/modalForm/index.vue'),
                 children: []
+            }, {
+                path: '/table',
+                name: "table",
+                meta: {
+                    label: '表格',
+                    icon: 'Setting'
+                },
+                component: () => import('@/views/table/index.vue'),
+                children: []
             },
         ]
     },
