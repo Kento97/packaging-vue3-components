@@ -1,0 +1,49 @@
+// 修改组件库内部的样式
+//1.自定义一个类名空间
+//2.先在浏览器内调试样式
+//3.把调试好的类名放在这个类名内
+//4.在App.vue里面引入这个文件
+//5.在组件内需要改样式的元素的父元素加上这个类名
+.choose-icon-dialog-body-style {
+  .el-dialog__body {
+    height: 400px;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+      /**/
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgb(239, 239, 239);
+      border-radius: 2px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #bfbfbf;
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: #333;
+    }
+
+    &::-webkit-scrollbar-corner {
+      background: #179a16;
+    }
+  }
+}
+
+.list-tabs__item {
+  .el-tabs__nav {
+    width: 100%;
+    display: flex;
+
+    .el-tabs__item {
+      flex: 1;
+      text-align: center;
+      padding: 0;
+    }
+  }
+}
