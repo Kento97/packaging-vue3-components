@@ -38,7 +38,7 @@
           :prop="item.prop">
         <component
             :is="`el-${item.type}`"
-            v-model="model[item.prop]"
+            v-model="model[item.prop!]"
             v-bind="item.attrs"
         >
           <component

@@ -24,9 +24,9 @@
       </el-table-column>
     </template>
     <el-table-column
-        :align="actionOptions.align"
-        :label="actionOptions.label"
-        :width="actionOptions.width"
+        :align="actionOptions!.align"
+        :label="actionOptions!.label"
+        :width="actionOptions!.width"
     >
       <template #default="scope">
         <slot :scope="scope" name="action"></slot>
