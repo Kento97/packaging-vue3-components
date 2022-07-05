@@ -9,7 +9,7 @@
         <component
             :is="`el-${item.type}`"
             v-if="item.type !== 'upload' && item.type!=='editor'"
-            v-model="model[item.prop]"
+            v-model="model[item.prop!]"
             v-bind="item.attrs"
         />
         <div v-if="item.type === 'editor'" id="editor" style="position: relative;z-index: 0;"></div>

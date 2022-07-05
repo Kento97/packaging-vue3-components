@@ -25,7 +25,7 @@ export default defineComponent({
         const iconName = item.meta.icon ? toLine(item.meta.icon) : "";
         const createIcon = (iconName: string) => {
           if (!iconName) return;
-          else return h(resolveComponent(iconName));
+          return h(resolveComponent(iconName));
         };
         //处理sub-menu的插槽
         const slots = {
